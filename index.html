@@ -1,114 +1,19 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Academic System</title>
-  <style>
-  :root {
-    --primary: #1e3a5f;
-    --accent: #2f6fed;
-    --bg: #f4f6f9;
-    --card: #ffffff;
-    --border: #e1e5eb;
-    --text: #1f2937;
-    --muted: #6b7280;
-    --danger: #d64545;
-    --success: #1c8a4b;
-  }
-  * { box-sizing: border-box; }
-  body {
-    font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    margin: 0;
-  }
-  #login-view {
-    height: 100vh; display: flex; align-items: center; justify-content: center;
-  }
-  .login-box {
-    background: var(--card); padding: 32px; border-radius: 12px; width: 320px;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-  }
-  .login-box h1 { font-size: 20px; margin: 0 0 4px; color: var(--primary); }
-  .login-box p.sub { color: var(--muted); margin: 0 0 20px; font-size: 13px; }
-  .portal-picker { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 4px; }
-  .portal-btn {
-    background: #eef1f6; color: var(--primary); border: 1px solid var(--border);
-    padding: 16px 8px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
-    text-align: center; line-height: 1.3;
-  }
-  .portal-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
-  input, select, textarea {
-    width: 100%; padding: 9px 10px; margin-bottom: 12px; border: 1px solid var(--border);
-    border-radius: 6px; font-size: 14px;
-  }
-  button {
-    background: var(--accent); color: #fff; border: none; padding: 9px 16px;
-    border-radius: 6px; cursor: pointer; font-size: 14px;
-  }
-  button.secondary { background: #eef1f6; color: var(--text); }
-  button.danger { background: var(--danger); }
-  button:disabled { opacity: 0.5; cursor: not-allowed; }
-  .error { color: var(--danger); font-size: 13px; margin: -4px 0 12px; }
-  .success-msg { color: var(--success); font-size: 13px; margin: -4px 0 12px; }
-
-  #app-view { display: none; }
-  .app-shell { display: flex; min-height: 100vh; }
-  .sidebar {
-    width: 210px; background: var(--primary); color: #fff; padding: 18px 0; flex-shrink: 0;
-  }
-  .sidebar h2 { font-size: 15px; padding: 0 18px; margin: 0 0 18px; }
-  .sidebar .who { padding: 0 18px 16px; font-size: 12px; opacity: 0.75; border-bottom: 1px solid rgba(255,255,255,0.15); margin-bottom: 10px; }
-  .nav-item {
-    padding: 10px 18px; cursor: pointer; font-size: 14px; opacity: 0.85;
-  }
-  .nav-item:hover { background: rgba(255,255,255,0.08); }
-  .nav-item.active { background: rgba(255,255,255,0.15); opacity: 1; font-weight: 600; }
-  .main { flex: 1; padding: 24px 28px; overflow-x: auto; }
-  .main h1 { font-size: 20px; margin: 0 0 18px; color: var(--primary); }
-  .card { background: var(--card); border-radius: 10px; padding: 18px; margin-bottom: 18px; border: 1px solid var(--border); }
-  .card h3 { margin: 0 0 12px; font-size: 15px; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
-  th { color: var(--muted); font-weight: 600; }
-  .row-actions button { font-size: 12px; padding: 5px 10px; margin-right: 6px; }
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
-  .badge { padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
-  .badge.active, .badge.open, .badge.passed, .badge.paid, .badge.enrolled { background: #e3f5ea; color: var(--success); }
-  .badge.dissolved, .badge.cancelled, .badge.failed, .badge.inactive { background: #fbe6e6; color: var(--danger); }
-  .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-  .muted { color: var(--muted); font-size: 12px; }
-  #toast {
-    position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: #fff;
-    padding: 10px 16px; border-radius: 8px; font-size: 13px; display: none; z-index: 99;
-  }
-</style>
-
+  <base target="_top">
+  <?!= include('Stylesheet'); ?>
 </head>
 <body>
-
   <div id="login-view">
     <div class="login-box">
       <h1 id="school-name">Academic System</h1>
-      <p class="sub" id="portal-sub">Choose a portal to sign in</p>
-
-      <div id="portal-picker" class="portal-picker">
-        <button type="button" class="portal-btn" data-portal="faculty" onclick="selectPortal('faculty')">Faculty Portal</button>
-        <button type="button" class="portal-btn" data-portal="student" onclick="selectPortal('student')">Student Portal</button>
-        <button type="button" class="portal-btn" data-portal="employee" onclick="selectPortal('employee')">Employee Portal</button>
-        <button type="button" class="portal-btn" data-portal="dean" onclick="selectPortal('dean')">Dean's Module</button>
-      </div>
-
-      <div id="portal-form" style="display:none;">
-        <p class="muted" id="portal-active-label" style="margin:0 0 12px;"></p>
-        <div id="login-error" class="error" style="display:none;"></div>
-        <input id="login-username" placeholder="Username" autocomplete="username">
-        <input id="login-password" type="password" placeholder="Password" autocomplete="current-password">
-        <button id="login-btn" style="width:100%;">Log In</button>
-        <button type="button" class="secondary" style="width:100%;margin-top:8px;" onclick="backToPortals()">&larr; Switch Portal</button>
-      </div>
-      <p class="muted" style="margin-top:14px;">Default admin: admin / admin123 (Employee Portal)</p>
+      <p class="sub">Sign in to continue</p>
+      <div id="login-error" class="error" style="display:none;"></div>
+      <input id="login-username" placeholder="Username" autocomplete="username">
+      <input id="login-password" type="password" placeholder="Password" autocomplete="current-password">
+      <button id="login-btn" style="width:100%;">Log In</button>
+      <p class="muted" style="margin-top:14px;">Default admin: admin / admin123</p>
     </div>
   </div>
 
@@ -117,7 +22,7 @@
       <div class="sidebar">
         <h2 id="sidebar-school">Academic System</h2>
         <div class="who" id="who-box"></div>
-        <div id="nav-items"></div>
+        <div id="nav-items"></div>      
         <div class="nav-item" onclick="doLogout()">Log Out</div>
       </div>
       <div class="main">
@@ -133,8 +38,7 @@
   var currentUser = null;
   var settingsCache = null;
 
-  // Surface ANY uncaught JS error on-screen (instead of a silent blank
-  // page) — this is a temporary but permanent-until-removed diagnostic.
+  // Surface ANY uncaught JS error on-screen (instead of a silent blank page)
   window.onerror = function (msg, src, line, col, err) {
     var box = document.getElementById('js-error-box');
     if (!box) {
@@ -148,6 +52,27 @@
     return false;
   };
 
+// Global variable containing the deployed web app URL
+      const APP_URL = "<?= appUrl ?>";
+
+      console.log('Current App URL:', APP_URL);
+
+      // Example usage: Making an RPC / API call using fetch
+      async function callServerApi(actionData) {
+        try {
+          const response = await fetch(APP_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify(actionData)
+          });
+          const result = await response.json();
+          return result;
+        } catch (error) {
+          console.error('API Request failed:', error);
+        }
+      }
   // ---------- utilities ----------
   function toast(msg, isError) {
     var t = document.getElementById('toast');
@@ -156,7 +81,85 @@
     t.style.display = 'block';
     setTimeout(function () { t.style.display = 'none'; }, 3200);
   }
-  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbz9f6VBTt3VmQj-xiby5M8o7uZgXUzkI81RvfgvsTLxqnwFh94Qc4GPNj4zI8ih2fCA/exec';
+  function call(fnName, args, onSuccess, onError) {
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .withFailureHandler(function (err) {
+        toast(err.message || String(err), true);
+        if (onError) onError(err);
+      })[fnName].apply(null, args || []);
+  }
+  function esc(s) {
+    return (s === undefined || s === null) ? '' : String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+  function badge(status) {
+    var cls = String(status || '').toLowerCase();
+    return '<span class="badge ' + cls + '">' + esc(status) + '</span>';
+  }
+
+  // ---------- College / Department cascading dropdowns ----------
+  function loadCollegeSelect_(selId, onChangeFn) {
+    call('listColleges', [authToken], function (list) {
+      var el = document.getElementById(selId);
+      if (!el) return;
+      el.innerHTML = '<option value="">Select College…</option>' +
+        list.map(function (c) { return '<option value="' + esc(c) + '">' + esc(c) + '</option>'; }).join('');
+      el.onchange = onChangeFn || null;
+    });
+  }
+  function loadDeptSelect_(selId, college) {
+    call('listDepartments', [authToken, college], function (list) {
+      var el = document.getElementById(selId);
+      if (!el) return;
+      el.innerHTML = '<option value="">Select Department…</option>' +
+        list.map(function (d) { return '<option value="' + esc(d) + '">' + esc(d) + '</option>'; }).join('');
+    });
+  }
+
+  // ---------- login ----------
+  document.getElementById('login-btn').onclick = doLogin;
+  document.getElementById('login-password').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') doLogin();
+  });
+
+  function doLogin() {
+    var u = document.getElementById('login-username').value.trim();
+    var p = document.getElementById('login-password').value;
+    document.getElementById('login-error').style.display = 'none';
+    if (!u || !p) return;
+    call('login', [u, p], function (res) {
+      authToken = res.token;
+      currentUser = res;
+      document.getElementById('login-view').style.display = 'none';
+      document.getElementById('app-view').style.display = 'block';
+      document.getElementById('who-box').innerHTML = esc(res.name) + '<br><span style="opacity:.7">' + esc(res.role) + '</span>';
+      call('getSettings', [authToken], function (s) {
+        settingsCache = s || {};
+        document.getElementById('school-name').textContent = settingsCache.SchoolName || 'Academic System';
+        document.getElementById('sidebar-school').textContent = settingsCache.SchoolName || 'Academic System';
+        buildNav();
+      }, function () {
+        settingsCache = {};
+        buildNav();
+      });
+    }, function (err) {
+      document.getElementById('login-error').textContent = err.message || 'Login failed.';
+      document.getElementById('login-error').style.display = 'block';
+    });
+  }
+
+  function doLogout() {
+    call('logout', [authToken], function () {
+      authToken = null; currentUser = null;
+      document.getElementById('app-view').style.display = 'none';
+      document.getElementById('login-view').style.display = 'flex';
+      document.getElementById('login-username').value = '';
+      document.getElementById('login-password').value = '';
+    });
+  }
+var ENDPOINT = 'https://script.google.com/macros/s/AKfycby5ZOUV2ByLHiSZKj6TJwNGMxUYeGnVmrusNG3jEoRHtAI3NcLRu2fvmpplCnC1gJgekQ/exec';
 
   function call(fnName, args, onSuccess, onError) {
     function fail(err) {
@@ -180,121 +183,6 @@
       })
       .catch(function (e) { fail(new Error('Could not reach the server. Check the ENDPOINT URL and your connection. (' + e.message + ')')); });
   }
-  function esc(s) {
-    return (s === undefined || s === null) ? '' : String(s).replace(/[&<>"]/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
-    });
-  }
-  function badge(status) {
-    var cls = String(status || '').toLowerCase();
-    return '<span class="badge ' + cls + '">' + esc(status) + '</span>';
-  }
-
-  // ---------- College / Department cascading dropdowns ----------
-  // Used anywhere a College or Department needs to be picked from a list
-  // (Add Subject, Add Faculty, Add Student, Chairman loading) instead of
-  // typed freehand, so the values line up cleanly across the system.
-  function loadCollegeSelect_(selId, onChangeFn) {
-    call('listColleges', [authToken], function (list) {
-      var el = document.getElementById(selId);
-      if (!el) return;
-      el.innerHTML = '<option value="">Select College…</option>' +
-        list.map(function (c) { return '<option value="' + esc(c) + '">' + esc(c) + '</option>'; }).join('');
-      el.onchange = onChangeFn || null;
-    });
-  }
-  function loadDeptSelect_(selId, college) {
-    call('listDepartments', [authToken, college], function (list) {
-      var el = document.getElementById(selId);
-      if (!el) return;
-      el.innerHTML = '<option value="">Select Department…</option>' +
-        list.map(function (d) { return '<option value="' + esc(d) + '">' + esc(d) + '</option>'; }).join('');
-    });
-  }
-
-  // ---------- login / portal switcher ----------
-  // Which roles are allowed to sign in through each portal. This is a
-  // UI-level convenience (clearer forms, fewer support questions about
-  // "which login do I use") — the server still enforces every actual
-  // permission on its own regardless of which portal was used.
-  var PORTALS = {
-    faculty: { label: 'Faculty Portal', roles: ['Faculty', 'Chairman'] },
-    student: { label: 'Student Portal', roles: ['Student'] },
-    employee: { label: 'Employee Portal', roles: ['Admin', 'OCDI', 'Admission', 'Accounting', 'Registrar'] },
-    dean: { label: "Dean's Module", roles: ['Dean'] }
-  };
-  var selectedPortal = null;
-
-  function selectPortal(key) {
-    selectedPortal = key;
-    document.getElementById('portal-picker').style.display = 'none';
-    document.getElementById('portal-form').style.display = 'block';
-    document.getElementById('portal-sub').textContent = PORTALS[key].label;
-    document.getElementById('portal-active-label').textContent = 'Signing in to the ' + PORTALS[key].label;
-    document.getElementById('login-error').style.display = 'none';
-    document.getElementById('login-username').value = '';
-    document.getElementById('login-password').value = '';
-    document.getElementById('login-username').focus();
-  }
-  function backToPortals() {
-    selectedPortal = null;
-    document.getElementById('portal-form').style.display = 'none';
-    document.getElementById('portal-picker').style.display = 'grid';
-    document.getElementById('portal-sub').textContent = 'Choose a portal to sign in';
-  }
-
-  document.getElementById('login-btn').onclick = doLogin;
-  document.getElementById('login-password').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') doLogin();
-  });
-
-  function doLogin() {
-    var u = document.getElementById('login-username').value.trim();
-    var p = document.getElementById('login-password').value;
-    document.getElementById('login-error').style.display = 'none';
-    if (!selectedPortal || !u || !p) return;
-    call('login', [u, p], function (res) {
-      var allowedRoles = PORTALS[selectedPortal].roles;
-      if (allowedRoles.indexOf(res.role) === -1) {
-        call('logout', [res.token], function () {});
-        document.getElementById('login-error').textContent =
-          'This account (' + res.role + ') isn\'t used with the ' + PORTALS[selectedPortal].label + '. Switch portals and try again.';
-        document.getElementById('login-error').style.display = 'block';
-        return;
-      }
-      authToken = res.token;
-      currentUser = res;
-      document.getElementById('login-view').style.display = 'none';
-      document.getElementById('app-view').style.display = 'block';
-      document.getElementById('who-box').innerHTML = esc(res.name) + '<br><span style="opacity:.7">' + esc(res.role) + '</span>';
-      // Load settings FIRST, then build the nav — the first page rendered
-      // (the dashboard) reads settingsCache, so it must exist by then.
-      call('getSettings', [authToken], function (s) {
-        settingsCache = s || {};
-        document.getElementById('school-name').textContent = settingsCache.SchoolName || 'Academic System';
-        document.getElementById('sidebar-school').textContent = settingsCache.SchoolName || 'Academic System';
-        buildNav();
-      }, function () {
-        settingsCache = {};
-        buildNav();
-      });
-    }, function (err) {
-      document.getElementById('login-error').textContent = err.message || 'Login failed.';
-      document.getElementById('login-error').style.display = 'block';
-    });
-  }
-
-  function doLogout() {
-    call('logout', [authToken], function () {
-      authToken = null; currentUser = null;
-      document.getElementById('app-view').style.display = 'none';
-      document.getElementById('login-view').style.display = 'flex';
-      document.getElementById('login-username').value = '';
-      document.getElementById('login-password').value = '';
-      backToPortals();
-    });
-  }
-
   // ---------- nav ----------
   var NAV = {
     Admin: [
@@ -590,7 +478,7 @@
     });
   }
 
-  // ============ ADMIN: Grades (view only; encoding is done by Faculty) ============
+  // ============ ADMIN: Grades ============
   function renderGradesAdmin() {
     var c = document.getElementById('content');
     c.innerHTML = '<h1>Grades</h1><div class="card"><h3>Look Up Student Grades</h3><div class="form-grid">' +
@@ -618,7 +506,7 @@
   function renderPayments() {
     var c = document.getElementById('content');
     c.innerHTML = '<h1>Payments</h1>' +
-      '<div class="card"><h3>Record a Payment (manual — online checkout coming later)</h3><div class="form-grid">' +
+      '<div class="card"><h3>Record a Payment</h3><div class="form-grid">' +
       '<input id="pay-student" placeholder="Student ID">' +
       '<input id="pay-amount" placeholder="Amount">' +
       '<input id="pay-method" placeholder="Method (e.g. Cash, GCash)">' +
