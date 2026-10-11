@@ -3,56 +3,143 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Academe System</title>
-<meta name="description" content="Buy fresh export-grade butterfly pupae from breeders and reserve butterfly farm visits in Marinduque and beyond.">
+<title>Montellano University &amp; Park</title>
+<meta name="description" content="Montellano University & Park official portal - Excellence in education, ecological research, and sustainable development in Marinduque.">
 <style>
-  :root{--bg:#f4f7f1;--fg:#223;--card:#fff;--g:#2f6b3f;--line:#dbe5d6}
-  @media (prefers-color-scheme:dark){:root{--bg:#17201a;--fg:#e6eee6;--card:#222d25;--g:#4f9a63;--line:#3a483d}}
+  :root{
+    --bg: #f5f3f7; 
+    --fg: #2c2533; 
+    --card: #ffffff; 
+    --lavender: #9b7ede; 
+    --lavender-light: #eae4f8;
+    --green: #3b7a57; 
+    --green-light: #e6f0ec;
+    --line: #d8cde4;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg: #19161f; 
+      --fg: #f0ecf5; 
+      --card: #231e2b; 
+      --lavender: #b39df2; 
+      --lavender-light: #2c243b;
+      --green: #4e9c71; 
+      --green-light: #1d2d23;
+      --line: #423652;
+    }
+  }
   *{box-sizing:border-box}
-  body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.5}
-  header{background:var(--g);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-  header h1{margin:0;font-size:1.2rem}
-  .btn{display:inline-block;background:var(--g);color:#fff;border:0;border-radius:8px;padding:12px 20px;font-weight:700;font-size:1rem;cursor:pointer;text-decoration:none}
-  .btn.alt{background:none;color:var(--fg);border:2px solid var(--g)}
-  header .btn{background:#fff;color:#2f6b3f;padding:8px 14px;font-size:.9rem}
-  .hero{max-width:900px;margin:auto;padding:40px 18px 20px;text-align:center}
-  .hero h2{font-size:1.9rem;margin:0 0 10px}
-  .hero p{max-width:620px;margin:0 auto 20px}
-  .cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-  .cards{max-width:1000px;margin:20px auto;padding:0 18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
-  .card h3{margin:0 0 6px}
-  .card ul{margin:0;padding-left:18px;font-size:.92rem}
+  body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}
+  header{background:var(--green);color:#fff;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
+  header h1{margin:0;font-size:1.3rem}
+  .btn{display:inline-block;background:var(--lavender);color:#fff;border:0;border-radius:8px;padding:12px 20px;font-weight:700;font-size:1rem;cursor:pointer;text-decoration:none;transition:opacity 0.2s}
+  .btn:hover{opacity:0.9}
+  .btn.alt{background:none;color:var(--fg);border:2px solid var(--lavender)}
+  header .btn{background:#fff;color:var(--green);padding:8px 14px;font-size:.9rem}
+  
+  .hero{max-width:900px;margin:auto;padding:50px 18px 30px;text-align:center}
+  .hero h2{font-size:2.2rem;margin:0 0 15px;color:var(--green)}
+  .hero p{max-width:680px;margin:0 auto 25px;font-size:1.05rem;opacity:0.9}
+  
+  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  
+  .cards{max-width:1100px;margin:30px auto;padding:0 18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 4px 6px rgba(0,0,0,0.02)}
+  .card h3{margin:0 0 12px;color:var(--lavender);font-size:1.25rem}
+  .card ul{margin:0;padding-left:18px;font-size:.95rem}
+  .card li{margin-bottom:6px}
+  
+  .highlight-section{background:var(--lavender-light);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:40px 18px;margin:40px 0;text-align:center}
+  .highlight-section h3{color:var(--green);margin-top:0;font-size:1.6rem}
+  .highlight-section p{max-width:700px;margin:0 auto}
+
   #frameWrap{display:none;max-width:1100px;margin:20px auto;padding:0 12px}
   #frameWrap iframe{width:100%;height:85vh;border:1px solid var(--line);border-radius:12px;background:#fff}
-  .warn{max-width:700px;margin:16px auto;padding:12px 16px;border-radius:10px;background:#fff3cd;color:#664d03;display:none}
-  footer{text-align:center;font-size:.8rem;padding:24px;opacity:.75}
+  
+  .warn{max-width:700px;margin:16px auto;padding:12px 16px;border-radius:10px;background:#fff3cd;color:#664d03;display:none;text-align:center}
+  
+  footer{text-align:center;font-size:.85rem;padding:30px;opacity:0.8;background:var(--card);border-top:1px solid var(--line)}
 </style>
 </head>
 <body>
+
 <header>
   <h1>🦋 Montellano University &amp; Park</h1>
-  <a class="btn" id="openTop" href="#" target="_blank" rel="noopener">Open App</a>
+  <a class="btn" id="openTop" href="#" onclick="showFrame(); return false;">Open Student Portal</a>
 </header>
 
-<div id="frameWrap"><iframe id="appFrame" title="Butterfly Pupae Shop app" allow="clipboard-write"></iframe></div>
+<div class="warn" id="warn">⚠️ Configuration notice: The Apps Script URL is placeholder-only.</div>
 
-<footer>Montellano University  &amp; Park · Marinduque, Philippines</footer>
+<section class="hero">
+  <h2>Cultivating Minds, Preserving Nature</h2>
+  <p>Welcome to Montellano University &amp; Park—where academic rigor meets ecological innovation. Explore our programs, research initiatives, and integrated campus environments.</p>
+  <div class="cta">
+    <button class="btn" onclick="showFrame()">Access Portal</button>
+    <a href="#academics" class="btn alt">Explore Programs</a>
+  </div>
+</section>
+
+<div class="cards" id="academics">
+  <div class="card">
+    <h3>🎓 Academic Programs</h3>
+    <ul>
+      <li>College of Agriculture &amp; Environmental Sciences</li>
+      <li>College of Arts, Sciences, and Education</li>
+      <li>Institute of Computing &amp; Information Technology</li>
+      <li>Department of Sustainable Tourism &amp; Park Management</li>
+    </ul>
+  </div>
+  
+  <div class="card">
+    <h3>🔬 Research &amp; Park</h3>
+    <ul>
+      <li>Biodiversity and Butterfly Conservation Hub</li>
+      <li>Export-grade Agricultural Research Center</li>
+      <li>Marinduque Eco-Park Field Stations</li>
+      <li>Student-led Ecological Innovation Grants</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>🏫 Campus Life</h3>
+    <ul>
+      <li>Active Student Councils &amp; Organizations</li>
+      <li>Modern Libraries &amp; Digital Learning Labs</li>
+      <li>Eco-friendly Student Dormitories</li>
+      <li>Annual Cultural &amp; Biodiversity Festivals</li>
+    </ul>
+  </div>
+</div>
+
+<div class="highlight-section">
+  <h3>The Marinduque Ecological Advantage</h3>
+  <p>Situated in the heart of Marinduque, our campus serves as both a premier institution for higher education and a living laboratory for environmental preservation, sustainable agriculture, and wildlife breeding initiatives.</p>
+</div>
+
+<div id="frameWrap">
+  <iframe id="appFrame" title="Montellano University Portal App" allow="clipboard-write"></iframe>
+</div>
+
+<footer>
+  Montellano University &amp; Park &middot; Marinduque, Philippines
+</footer>
+
 <script>
-  // 1) Deploy your Apps Script as a Web app, then paste its URL (ends with /exec) here:
+  // Replace with your Google Apps Script Web App URL if needed
   const APP_URL = 'https://script.google.com/macros/s/AKfycby5ZOUV2ByLHiSZKj6TJwNGMxUYeGnVmrusNG3jEoRHtAI3NcLRu2fvmpplCnC1gJgekQ/exec';
 
   const ok = /^https:\/\/script\.google\.com\/.+\/exec/.test(APP_URL);
-  ['openTop','openMain'].forEach(id => { const a = document.getElementById(id); a.href = ok ? APP_URL : '#'; });
   if (!ok) document.getElementById('warn').style.display = 'block';
 
   function showFrame() {
     if (!ok) { document.getElementById('warn').style.display = 'block'; return; }
     const f = document.getElementById('appFrame');
     if (!f.src) f.src = APP_URL;
-    const w = document.getElementById('frameWrap'); w.style.display = 'block';
+    const w = document.getElementById('frameWrap'); 
+    w.style.display = 'block';
     w.scrollIntoView({ behavior: 'smooth' });
   }
+
   if (ok && location.hash === '#app') showFrame();
 </script>
 </body>
