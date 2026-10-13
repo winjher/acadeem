@@ -59,6 +59,26 @@
   .warn{max-width:700px;margin:16px auto;padding:12px 16px;border-radius:10px;background:#fff3cd;color:#664d03;display:none;text-align:center}
   
   footer{text-align:center;font-size:.85rem;padding:30px;opacity:0.8;background:var(--card);border-top:1px solid var(--line)}
+
+  /* Portal access overlays */
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;justify-content:center;align-items:flex-start;padding:40px 18px;overflow-y:auto}
+  .overlay.active{display:flex}
+  .overlay-panel{background:var(--card);border-radius:16px;max-width:800px;width:100%;padding:32px;box-shadow:0 8px 32px rgba(0,0,0,0.2);position:relative}
+  .overlay-panel h2{margin:0 0 8px;color:var(--green);text-align:center}
+  .overlay-panel .subtitle{text-align:center;opacity:0.7;margin:0 0 24px}
+  .close-btn{position:absolute;top:16px;right:16px;background:none;border:0;font-size:1.5rem;cursor:pointer;color:var(--fg);opacity:0.6;line-height:1}
+  .close-btn:hover{opacity:1}
+  .role-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:16px}
+  .role-card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:20px 12px;text-align:center;cursor:pointer;transition:border-color 0.2s,transform 0.15s}
+  .role-card:hover{border-color:var(--lavender);transform:translateY(-2px)}
+  .role-card .role-icon{font-size:2rem;display:block;margin-bottom:8px}
+  .role-card .role-label{font-weight:700;color:var(--fg);font-size:.95rem}
+  .login-form{max-width:360px;margin:0 auto}
+  .login-form label{display:block;font-weight:600;margin-bottom:6px;font-size:.9rem}
+  .login-form input{width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;font-size:1rem;margin-bottom:16px;background:var(--bg);color:var(--fg)}
+  .role-badge{display:inline-block;background:var(--lavender-light);color:var(--lavender);padding:4px 14px;border-radius:20px;font-size:.85rem;font-weight:600;margin-bottom:20px}
+  .login-form .btn{width:100%;text-align:center}
+  .back-link{display:block;text-align:center;margin-top:16px;color:var(--lavender);cursor:pointer;font-size:.9rem;text-decoration:underline;border:0;background:none}
 </style>
 </head>
 <body>
@@ -120,6 +140,53 @@
   <iframe id="appFrame" title="Montellano University Portal App" allow="clipboard-write"></iframe>
 </div>
 
+<div class="overlay" id="roleOverlay">
+  <div class="overlay-panel">
+    <button class="close-btn" onclick="closeOverlay('roleOverlay')">&times;</button>
+    <h2>Choose Your Portal</h2>
+    <p class="subtitle">Select your role to access the appropriate portal</p>
+    <div class="role-cards">
+      <div class="role-card" onclick="selectRole('Admin')">
+        <span class="role-icon">🛡️</span>
+        <span class="role-label">Admin</span>
+      </div>
+      <div class="role-card" onclick="selectRole('Employee')">
+        <span class="role-icon">💼</span>
+        <span class="role-label">Employee</span>
+      </div>
+      <div class="role-card" onclick="selectRole('Faculty')">
+        <span class="role-icon">📚</span>
+        <span class="role-label">Faculty</span>
+      </div>
+      <div class="role-card" onclick="selectRole('Parents')">
+        <span class="role-icon">👨‍👩‍👧</span>
+        <span class="role-label">Parents</span>
+      </div>
+      <div class="role-card" onclick="selectRole('Student')">
+        <span class="role-icon">🎓</span>
+        <span class="role-label">Student</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="loginOverlay">
+  <div class="overlay-panel">
+    <button class="close-btn" onclick="closeOverlay('loginOverlay')">&times;</button>
+    <h2>Sign In</h2>
+    <p class="subtitle">Enter your credentials to continue</p>
+    <form class="login-form" onsubmit="submitLogin(); return false;">
+      <span class="role-badge" id="roleBadge">Student</span>
+      <label for="username">Username / ID Number</label>
+      <input type="text" id="username" placeholder="Enter your username" required>
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter your password" required>
+      <button type="submit" class="btn">Sign In</button>
+      <button type="button" class="back-link" onclick="backToRoles()">← Back to role selection</button>
+    </form>
+  </div>
+</div>
+
 <footer>
   LepVision University &amp; Park &middot; Marinduque, Philippines
 </footer>
@@ -129,15 +196,36 @@
   const APP_URL = 'https://script.google.com/macros/s/AKfycby5ZOUV2ByLHiSZKj6TJwNGMxUYeGnVmrusNG3jEoRHtAI3NcLRu2fvmpplCnC1gJgekQ/exec';
 
   const ok = /^https:\/\/script\.google\.com\/.+\/exec/.test(APP_URL);
-  if (!ok) document.getElementById('warn').style.display = 'block';
+  let selectedRole = '';
 
   function showFrame() {
+    document.getElementById('roleOverlay').classList.add('active');
+  }
+
+  function selectRole(role) {
+    selectedRole = role;
+    document.getElementById('roleBadge').textContent = role;
+    document.getElementById('roleOverlay').classList.remove('active');
+    document.getElementById('loginOverlay').classList.add('active');
+  }
+
+  function backToRoles() {
+    document.getElementById('loginOverlay').classList.remove('active');
+    document.getElementById('roleOverlay').classList.add('active');
+  }
+
+  function submitLogin() {
+    document.getElementById('loginOverlay').classList.remove('active');
     if (!ok) { document.getElementById('warn').style.display = 'block'; return; }
     const f = document.getElementById('appFrame');
     if (!f.src) f.src = APP_URL;
-    const w = document.getElementById('frameWrap'); 
+    const w = document.getElementById('frameWrap');
     w.style.display = 'block';
     w.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function closeOverlay(id) {
+    document.getElementById(id).classList.remove('active');
   }
 
   if (ok && location.hash === '#app') showFrame();
