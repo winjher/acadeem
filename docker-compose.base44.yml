@@ -1,0 +1,16 @@
+services:
+  web:
+    image: python:3-slim
+    restart: on-failure
+    ports:
+      - "3000:80"
+    volumes:
+      - ./:/app:ro
+    working_dir: /app
+    command: ["python3", "-m", "http.server", "80", "--bind", "0.0.0.0"]
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost/')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
